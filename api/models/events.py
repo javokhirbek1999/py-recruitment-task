@@ -5,9 +5,12 @@ class Building(models.Model):
     """Building model"""
 
     name = models.CharField(max_length=200, null=True, blank=True)
-    sections = models.IntegerField(default=0, verbose_name='You can leave it blank')
-    section_rows = models.IntegerField(default=0, verbose_name='Total number of rows of seats per section')
-    row_seats = models.IntegerField(default=0, verbose_name='Total number of seats per row')
+    sections = models.IntegerField(default=0)
+    section_rows = models.IntegerField(default=0, verbose_name='Rows of per section')
+    row_seats = models.IntegerField(default=0, verbose_name='Seats per row')
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Seat(models.Model):
@@ -43,17 +46,20 @@ class Venue(models.Model):
     post_code = models.CharField(max_length=50)
 
 
+    @property
+    def building_data(self):
+        """Method to get details about building"""
+        return self.building.name
+
     def __str__(self) -> str:
         return f'{self.building.name}, {self.street}, {self.post_code}, {self.city}'
+
+
 
 
 class Event(models.Model):
     """Event model"""
     name = models.CharField(max_length=200)
-    premium_tickets = models.IntegerField(default=0)
-    gold_tickets = models.IntegerField(default=0)
-    standard = models.IntegerField(default=0)
-    total_tickets = models.IntegerField(default=0) # Read Only
     description = models.TextField(blank=True, null=True)
     event_date = models.DateField()
     door_opens_at = models.TimeField(blank=True, null=True)
@@ -63,27 +69,15 @@ class Event(models.Model):
 
 
     @property
-    def available_tickets(self):
-        """Method to get total number of tickets"""
-        data = {
-            'premium': Event.objects.filter(premium_tickets__gte=1).count(),
-            'gold': Event.objects.filter(gold_tickets__gte=1).count(),
-            'standard': Event.objects.filter(standard__gte=1).count()
-        }
-        return {
-            'available_tickets': data['premium']+data['gold_tickets']+data['standard'],
-            'detail': data           
-        }
-
-
-    @property
     def venue_info(self):
         """Method to get info about event venue"""
         
         return {
-            'name': self.venue.name,
             'building': self.venue.building,
             'street': self.venue.street,
             'city': self.venue.city,
             'post_code': self.venue.post_code
         }
+    
+    def __str__(self) -> str:
+        return f"{self.name} | {self.event_date} | {self.venue_info['building']}"
