@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     # 3th party libs
     "rest_framework",
     # Own modules
-    'api.event',
-    'api.ticket',
-    'api.reservation',
+    # 'api.event',
+    # 'api.ticket',
+    # 'api.reservation',
+    # 'api.users'
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH_USER_MODEL = 'api.users.User'
