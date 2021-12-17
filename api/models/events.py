@@ -33,6 +33,18 @@ class Seat(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
 
 
+    @property
+    def building_info(self):
+        """Method to get building info"""
+
+        return {
+            'id': self.building.id,
+            'name': self.building.name,
+            'sections': self.building.sections,
+            'section_rows': self.building.sections_rows,
+            'row_seats': self.building.row_seats
+        } 
+
     def __str__(self) -> str:
         return f"Section: {self.section} | Row: {self.row} | Seat Number: {self.seat_number}"
 
@@ -47,9 +59,9 @@ class Venue(models.Model):
 
 
     @property
-    def building_data(self):
+    def building_details(self):
         """Method to get details about building"""
-        return self.building.name
+        return self.building.building_info
 
     def __str__(self) -> str:
         return f'{self.building.name}, {self.street}, {self.post_code}, {self.city}'
@@ -73,7 +85,8 @@ class Event(models.Model):
         """Method to get info about event venue"""
         
         return {
-            'building': self.venue.building,
+            'id': self.venue.id,
+            'building': self.venue.building_info,
             'street': self.venue.street,
             'city': self.venue.city,
             'post_code': self.venue.post_code

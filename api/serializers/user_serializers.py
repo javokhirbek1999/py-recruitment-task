@@ -1,13 +1,14 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import serializers
 
-from ..models import users
-
+User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for creating client users"""
 
     class Meta:
-        model = users.User
+        model = User
         fields = ('id', 'email', 'username', 'password', 'is_active', 'date_joined', 'date_updated')
         extra_kwargs = {
             'password': {'write_only': True, 
@@ -21,8 +22,8 @@ class AdminUserSerializer(serializers.ModelSerializer):
     """Serializer for creating admin users"""
 
     class Meta:
-        model = users.User
-        fields = ('id', 'email', 'username', 'password', 'is_active', 'date_joined', 'date_updated')
+        model = User
+        fields = ('id', 'email', 'username', 'password', 'date_joined', 'date_updated')
         extra_kwargs = {
             'password': {'write_only': True},
             'date_joined': {'read_only': True},
