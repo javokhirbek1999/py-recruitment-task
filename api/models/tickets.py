@@ -1,6 +1,6 @@
 from django.db import models
 
-from .events import Event
+from .events import Event, Seat
 
 
 class Ticket(models.Model):
@@ -54,4 +54,7 @@ class Ticket(models.Model):
         }
     
     def __str__(self) -> str:
-        return f"{self.ticket_type} | Quantity: {self.quantity} | Event: {self.event.__str__()}"
+        return f"Ticket type: {self.ticket_type} | Quantity: {self.quantity} | Event: {self.event.__str__()}"
+
+
+# class TicketReservation

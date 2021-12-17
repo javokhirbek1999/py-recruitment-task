@@ -26,8 +26,8 @@ class Seat(models.Model):
         (SELECTED, 'selected')
     )
 
-    section = models.IntegerField(blank=True, null=False)
-    row = models.CharField(max_length=50)
+    section = models.IntegerField(blank=True, null=False, default=None)
+    row = models.CharField(max_length=50, default=None)
     seat_number = models.IntegerField()
     status = models.CharField(choices=SEAT_STATUS, default=AVAILABLE, max_length=200)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
