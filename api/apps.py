@@ -6,4 +6,4 @@ class ApiConfig(AppConfig):
     name = 'api'
 
     def ready(self) -> None:
-        from .signals import create_seat_signals
+        from .signals import create_seat_signals, create_tickets_signals
