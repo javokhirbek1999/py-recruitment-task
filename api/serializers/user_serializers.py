@@ -9,13 +9,19 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'password', 'is_active', 'date_joined', 'date_updated')
+        fields = ('id', 'first_name', 'last_name', 'email', 'username', 'password', 'is_active', 'date_joined', 'date_updated')
         extra_kwargs = {
             'password': {'write_only': True, 
                          'style': {'input_type': 'password'}},
             'date_joined': {'read_only': True},
             'date_updated': {'read_only': True}
         }
+    
+    def update(self, instance, validated_data):
+        return self.Meta.model.objects.creaate_user(**validated_data)
+
+    def create(self, validated_data):
+        return self.Meta.model.objects.create_user(**validated_data)
     
 
 class AdminUserSerializer(serializers.ModelSerializer):

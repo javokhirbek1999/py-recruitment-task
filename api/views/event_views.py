@@ -1,3 +1,5 @@
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
@@ -37,3 +39,18 @@ class TicketSetView(ModelViewSet):
 
     serializer_class = event_serializers.TicketSetSerializer
     queryset = events.TicketSet.objects.all()
+
+class DetailTicketSetView(RetrieveAPIView):
+    """API VIew for listing ticket sets for specific event by ticket type"""
+
+    serializer_class = event_serializers.TicketSetSerializer
+    queryset = events.TicketSet.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        event_id = kwargs.get('event_id')
+        ticket_type= kwargs.get('ticket_type')
+        instance = self.get_queryset().get(event__id=event_id, ticket_type=ticket_type)
+        data = self.get_serializer(instance)
+        return Response({
+            'data':data.data
+        })

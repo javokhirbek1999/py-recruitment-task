@@ -64,10 +64,16 @@ class ReserveTicketView(RetrieveUpdateAPIView):
             try:
                 reservation = Reservation.objects.get(client=user)
             except Reservation.DoesNotExist:
+                # If reservation does not exist, create new reservation and set reservation expiry time
                 reservation = Reservation.objects.create(client=user, event=instance.event, expiry_time=datetime.now()+timedelta(minutes=15))
             
+            # Calculate the total price of the tickets (One use can buy multiple tickets in a sinle reservation)
             reservation.total_price = reservation.total_price+instance.price
+            
+            # Keep track of the tickets in the reservation
             reservation.quantity = reservation.quantity+1
+
+            # Set the ticket status to select to avoid multiple users buying same ticket
             instance.status = 'selected'
             instance.reservation = reservation
 

@@ -15,7 +15,6 @@ class Transaction(models.Model):
     )
 
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)    
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(choices=CURRENCY_OPTIONS, max_length=100, default=GBP)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -33,5 +32,5 @@ class Transaction(models.Model):
         }
 
     def __str__(self) -> str:
-        return f"Reservation: {self.reservation} | Amount: {self.total_amount} {self.currency}"
+        return f"Reservation: {self.reservation}"
 

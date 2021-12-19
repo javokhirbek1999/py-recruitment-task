@@ -17,5 +17,6 @@ router.register('ticket-set', event_views.TicketSetView)
 
 urlpatterns = [
     path('',include(router.urls)),
+    path('ticket-set/event_id=<int:event_id>/ticket_type=<str:ticket_type>/', event_views.DetailTicketSetView.as_view()),
 ]
 
