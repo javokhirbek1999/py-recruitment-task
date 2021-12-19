@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import events, reservation, tickets, users
+from .models import events, reservation, tickets, users, transaction
 
 
 # Register your models here.
@@ -11,6 +11,7 @@ class UserConfig(BaseUserAdmin):
     list_display = ['email', 'username', 'is_active', 'is_superuser', 'date_joined', 'date_updated']
     fieldsets = (
         (None, {'fields': ('email', 'username')}),
+        (_('Personal Info'), {'fields': ('first_name','last_name')}),
         (_('Permissions'),{'fields': ('is_active','is_staff','is_superuser')}),
     )
     add_fieldsets = (
@@ -29,3 +30,4 @@ admin.site.register(events.Venue)
 admin.site.register(events.TicketSet)
 admin.site.register(tickets.Ticket)
 admin.site.register(reservation.Reservation)
+admin.site.register(transaction.Transaction)

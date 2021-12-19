@@ -29,7 +29,6 @@ class Seat(models.Model):
     section = models.IntegerField(blank=True, null=False, default=None)
     row = models.CharField(max_length=50, default=None)
     seat_number = models.IntegerField()
-    ticket_assigned = models.BooleanField(default=False)
     status = models.CharField(choices=SEAT_STATUS, default=AVAILABLE, max_length=200)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
 
@@ -42,7 +41,7 @@ class Seat(models.Model):
             'id': self.building.id,
             'name': self.building.name,
             'sections': self.building.sections,
-            'section_rows': self.building.sections_rows,
+            'section_rows': self.building.section_rows,
             'row_seats': self.building.row_seats
         } 
 
@@ -110,7 +109,20 @@ class TicketSet(models.Model):
         (STANDARD, 'standard')
     )
 
+
+    EVEN = 'even'
+    ALL_TOGETHER = 'all together'
+    AVOID_ONE = 'avoid one'
+
+    SELLING_OPTIONS = (
+        (EVEN, 'Even'),
+        (ALL_TOGETHER, 'All together'),
+        (AVOID_ONE, 'Avoid one')
+    )
+
+
     ticket_type = models.CharField(choices=TICKET_TYPES, max_length=100, default=STANDARD)
+    selling_option = models.CharField(choices=SELLING_OPTIONS, max_length=100, blank=True, null=True)
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

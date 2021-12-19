@@ -2,6 +2,8 @@ from django.utils.translation import gettext as _
 
 from rest_framework import serializers
 
+from api.models.tickets import Ticket
+
 from ..models.reservation import Reservation
 
 
@@ -10,24 +12,13 @@ class ReservationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ('id', 'ticket', 'member', 'reservation_option', 'date_created', 'expiry_time', 'quantity', 'total_price', 'status')
-    
-
-    def validate(self, attrs):
-        """Validate reservation"""
-
-        EVEN = 'even'
-        ALL_TOGETHER = 'all together'
-        AVOID_ONE = 'avoid one'
-
-        reservation_option = attrs['reservation_option']
-        quantity = attrs['quantity']
-        
-        if reservation_option == EVEN:
-            if quantity%2!=0:
-                msg = _('Please choose even number of tickets')
-                raise serializers.ValidationError(msg)
-        elif reservation_option == ALL_TOGETHER:
-            pass
-            
-
+        fields = ('id', 'client', 'client_details', 'event', 'event_details', 'date_created', 'expiry_time', 'quantity', 'total_price', 'status')
+        extra_kwargs = {
+            'client': {'write_only': True},
+            'client_details': {'read_only': True},
+            'event': {'write_only': True},
+            'event_details': {'read_only': True},
+            'date_created': {'read_only': True,},
+            'expiry_time': {'read_only': True},
+            'total_price': {'read_only': True}
+        }

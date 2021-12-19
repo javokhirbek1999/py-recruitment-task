@@ -30,3 +30,10 @@ class VenueViewSet(ModelViewSet):
 
     serializer_class = event_serializers.VenueSerializer
     queryset = events.Venue.objects.all()
+
+
+class TicketSetView(ModelViewSet):
+    """API View for creating tickets for sepecific event"""
+
+    serializer_class = event_serializers.TicketSetSerializer
+    queryset = events.TicketSet.objects.all()

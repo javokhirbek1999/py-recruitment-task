@@ -1,9 +1,8 @@
-from time import time
 from django.db import models
-from datetime import datetime, timedelta
+
+from api.models.events import Event
 
 from .users import User
-from .tickets import Ticket
 
 
 class Reservation(models.Model):
@@ -19,26 +18,37 @@ class Reservation(models.Model):
         (CANCELED, 'Cancelled')
     )
 
-    EVEN = 'even'
-    ALL_TOGETHER = 'all together'
-    AVOID_ONE = 'avoid one'
-
-    RESERVATION_OPTIONS = (
-        (EVEN, 'Even'),
-        (ALL_TOGETHER, 'All together'),
-        (AVOID_ONE, 'Avoid one')
-    )
-
-    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, default=None)
-    member = models.ForeignKey(User, on_delete=models.CASCADE)
-    reservation_option = models.CharField(choices=RESERVATION_OPTIONS, max_length=200, default=AVOID_ONE)
+    client = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
-    expiry_time = models.DateTimeField(default=datetime.now()+timedelta(minutes=15))
+    expiry_time = models.DateTimeField(default=None)
     quantity = models.IntegerField(default=1) # Read Only
     total_price = models.IntegerField(default=0)
     status = models.CharField(choices=RESERVATION_STATUS, max_length=200, default=NOT_PAID)
 
 
-    def __str__(self) -> str:
-        return f'Ticket: {self.ticket} | Event: {self.ticket.event.name} | Reservation Option: {self.reservation_option}'
+    @property
+    def client_details(self):
+        return {
+            'id': self.client.id,
+            'email': self.client.email,
+            'first_name': self.client.first_name,
+            'last_name': self.client.last_name
+        }
+    
+    @property
+    def event_details(self):
+        return {
+            'id': self.event.id,
+            'name': self.event.name,
+            'description': self.event.description,
+            'event_date': self.event.event_date,
+            'door_opens_at': self.event.door_opens_at,
+            'start_time': self.event.start_time,
+            'end_time': self.event.end_time,
+            'venue': self.event.venue_info
+        }
 
+
+    def __str__(self) -> str:
+        return f'Client: {self.client.first_name} {self.client.last_name} | Event: {self.event.name} '
