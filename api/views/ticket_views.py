@@ -28,14 +28,14 @@ class AllTicketsViewSet(ModelViewSet):
 
     @action(detail=True, url_path='booked')
     def booked(self, request, pk=None):
-        booked_tickets = Ticket.objects.booked().filter(event__id=pk)
+        booked_tickets = Ticket.objects.filter(status='booked').filter(event__id=pk)
         serializer = self.get_serializer(booked_tickets, many=True)
         return Response({'quantity':booked_tickets.count(), 'tickets': serializer.data}, status=status.HTTP_200_OK)
 
     
     @action(detail=True, url_path='selected')
-    def booked(self, request, pk=None):
-        selected_tickets = Ticket.objects.selected().filter(evet__id=pk)
+    def selected(self, request, pk=None):
+        selected_tickets = Ticket.objects.selected().filter(event__id=pk)
         serializer = self.get_serializer(selected_tickets, many=True)
         return Response({'quantity': selected_tickets.count(), 'tickets': serializer.data}, status=status.HTTP_200_OK)
 
