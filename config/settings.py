@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from distutils.util import strtobool
+# from celery.schedules import crontab
 
+# import api.tasks
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,9 +45,13 @@ INSTALLED_APPS = [
     # 3th party libs
     "rest_framework",
     'drf_yasg',
+    'django_crontab',
+
 
     # Own modules
     'api',
+    # 'django_celery_beat',
+    # 'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -147,3 +153,22 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'api.User'
+
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
+# CELERY_BEAT_SCHEDULE = {
+#     "sample_task": {
+#         "task": "api.tasks.release_expired_reservations",
+#         "schedule": crontab(minute="*/1"),
+#     },
+# }
+
+# Run Cron job to realase expired reservations every minute
+CRONJOBS = [
+    ('*/1 * * * *', 'api.cron.release_expired_reservations')
+]

@@ -50,7 +50,7 @@ You can explore all the endpoints by visiting the link aboe :)
 - Reserving Tickets
 - Handling Payments
 
-
+If payment is not paid for reservation in 15 minutes, that reservation will be released by <a href="https://pypi.org/project/django-crontab/">Django Crontab</a> 
 
 ---
 # API Endpoints
@@ -110,11 +110,11 @@ Ticket creation will be handled and automatically created by Ticket Set endpoint
 * List already booked tickets for specific event:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /tickets/all/{event_id}/booked/`
 * List all available tickets for specific event:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /tickets/all/{event_id}/available/`
 * List all selected tickets for specific event:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /tickets/all/{event_id}/selected/`
-* Advanced ticket listing: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_type={ticket_type}/status={status}/`
+* Advanced tickets filter: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_type={ticket_type}/status={status}/`
 * Create a new ticket: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`POST /ticket/all`
 * Retrieve ticket for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_id={ticket_id}/`
 * Reserve ticket for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PUT /tickets/all/event_id={event_id}/ticket_id={ticket_id}/reserve`
-* Advanced tickets filter: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_type={ticket_type}/status={status}/`
+
 
 ---
 ## Technologies
@@ -138,9 +138,14 @@ $ make run
 
 
 ## Usage
-Once the dependencies are installed, you can start the application by running the command below : 
+Creating Admin Users (Superuser): 
 ```bash 
-$ docker-compose up
+$ make superuser
+``` 
+To access python shell.
+Run:
+```bash 
+$ make shell
 ``` 
 You will then be able to access it at `127.0.0.1:8000` or `localhost:8000`
 
