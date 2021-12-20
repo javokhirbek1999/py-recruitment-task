@@ -1,6 +1,5 @@
 from datetime import timedelta, datetime
 
-
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet

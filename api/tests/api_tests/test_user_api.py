@@ -24,7 +24,7 @@ class UserApiTests(TestCase):
 
         response = self.client.post(CLIENT_USER_URL, payload)
 
-        user = get_user_model().objects.get(id=1)
+        user = get_user_model().objects.first()
 
         self.assertEqual(user.email, payload['email'])
         self.assertEqual(user.username, payload['username'])

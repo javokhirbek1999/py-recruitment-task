@@ -11,10 +11,10 @@ app_name = 'events'
 
 
 router = DefaultRouter()
-router.register('all', event_views.EventsViewSet)
-router.register('buildings', event_views.BuildingsViewSet)
-router.register('venues', event_views.VenueViewSet)
-router.register('ticket-set', event_views.TicketSetView)
+router.register('all', event_views.EventsViewSet, basename='all')
+router.register('buildings', event_views.BuildingsViewSet, basename='buildings')
+router.register('venues', event_views.VenueViewSet, basename='venues')
+router.register('ticket-set', event_views.TicketSetView, basename='ticket-set')
 
 urlpatterns = [
     path('',include(router.urls)),

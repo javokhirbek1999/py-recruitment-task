@@ -53,6 +53,70 @@ You can explore all the endpoints by visiting the link aboe :)
 
 
 ---
+# API Endpoints
+# 1. Events
+### 1.1. Events
+* List all events: &nbsp;&nbsp;&nbsp; `GET /events/all/`
+* Create Events:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`POST /events/all/`
+* Retrieve Event: &nbsp;&nbsp;&nbsp;&nbsp; `GET /events/all/{id}`
+* Update Event: &nbsp;&nbsp;&nbsp;&nbsp; `PUT /events/all/{id}`
+* Partial Update: &nbsp;&nbsp;&nbsp;&nbsp; `PATCH /events/all/{id}/`
+* Delete Event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `DELETE /events/all/{id}`
+
+## 1.2. Buildings
+* List All Buildings: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /events/buildings/`
+* Create Buildings: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `POST /events/buildings/`
+* Retrieve Building: &nbsp;&nbsp;&nbsp;&nbsp; `GET /events/buildings/{id}/`
+* Update Building: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `PUT /events/buildings/{id}/`
+* Partial Update: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `PATCH /events/buildings/{id}/`
+* Delete Building: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `DELETE /events/buildings/{id}/`
+
+## 1.3. Seats
+* List all building seats: &nbsp;&nbsp;&nbsp;&nbsp;`GET /events/seats/building_id={building_id}/`
+* Retrive building seat: &nbsp;&nbsp;&nbsp;&nbsp;`GET /events/seats/building_id={building_id}/seat_id={seat_id}/`
+  
+## 1.4. Ticket sets
+* List ticket sets: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /events/ticket-set/`
+* Create ticket set: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `POST /events/ticket-set/`
+*  Retrieve ticket set dynamic: &nbsp; `GET /events/ticket-set/event_id={event_id}/ticket_type={ticket_type}/`
+*  Retrieve ticket set: &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /events/ticket-set/{id}/`
+*  Update ticket set: &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; `PUT /events/ticket-set/{id}/`
+*  Partial Update: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; `PATCH /events/ticket-set/{id}/`
+*  Delete ticket set:  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`DELETE /events/ticket-set/{id}/`
+
+## 1.5. Venues
+* List venues: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /events/venues/`
+* Create venue: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`POST /events/venues/`
+* Retrieve venue: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /events/venues/{id}/`
+* Update venue: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PUT /events/venues/{id}/`
+* Partial Update:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PATCH /events/venues/{id}/`
+* Delete venue: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DELETE 
+​/events​/venues​/{id}​/`
+# 2. Reservations
+## 2.1 Reservations
+* List reservations:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /reservations/`
+* Create reservation: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`POST /reservations/`
+* Retrieve reservation by event: &nbsp;&nbsp;`GET /reservations/all/event_id={event_id}/`
+* Retrieve reservation: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /reservations/all/event_id={event_id}/`
+* Update reservation: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PUT /reservations/all/reservation_id={reservation_id}/`
+* Partial update:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `PATCH /reservations/all/reservation_id={reservation_id}/`
+* Delete: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DELETE /reservations/all/reservation_id={reservation_id}/`
+## 2.2 Payments and Transactions
+* Pay for selected reservation: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`POST /reservations/{id}/pay/`
+* Get Transaction details for selected reservation: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /reservations/{id}/transactions/`
+
+# 3. Tickets 
+Ticket creation will be handled and automatically created by Ticket Set endpoint
+## 3.1 Ticket
+* List all tickets:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /tickets/all/`
+* List all available tickets for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_type={ticket_type}/status={status}/`
+* List all selected tickets for specific event:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /tickets/all/{id}/selected/`
+* Create a new ticket: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`POST /ticket/all`
+* Retrieve ticket for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_id={ticket_id}/`
+* Reserve ticket for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PATCH /tickets/all/event_id={event_id}/ticket_id={ticket_id}/reserve`
+* Advanced tickets filter: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_type={ticket_type}/status={status}/`
+
+---
 ## Technologies
 - Docker
 - Python 3.9
