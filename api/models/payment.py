@@ -1,10 +1,11 @@
 from django.db import models
 
 from api.models.reservation import Reservation
+from api.models.tickets import Ticket
 
 
-class Transaction(models.Model):
-    """Transaction Model"""
+class Payment(models.Model):
+    """Payment Model"""
 
     GBP = 'GBP'
     OTHER = 'OTHER'
@@ -14,8 +15,10 @@ class Transaction(models.Model):
         (OTHER, 'OTHER')
     )
 
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)    
+    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)  
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(choices=CURRENCY_OPTIONS, max_length=100, default=GBP)
+    token = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -30,6 +33,18 @@ class Transaction(models.Model):
             'total_price': self.reservation.total_price,
             'status': self.reservation.status
         }
+
+    @property
+    def get_included_ticket_details(self):
+        data = {}
+        
+        tickets = Ticket.objects.filter(reservation=self.reservation)
+        
+        
+        for ticket in tickets:
+            data[ticket.id] = ticket.details
+        
+        return data
 
     def __str__(self) -> str:
         return f"Reservation: {self.reservation}"

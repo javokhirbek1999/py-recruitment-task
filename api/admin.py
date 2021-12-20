@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import events, reservation, tickets, users, transaction
+from .models import events, reservation, tickets, users, payment
 
 
 # Register your models here.
@@ -30,4 +30,4 @@ admin.site.register(events.Venue)
 admin.site.register(events.TicketSet)
 admin.site.register(tickets.Ticket)
 admin.site.register(reservation.Reservation)
-admin.site.register(transaction.Transaction)
+admin.site.register(payment.Payment)

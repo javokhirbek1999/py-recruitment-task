@@ -22,3 +22,4 @@ class ReservationSerializer(serializers.ModelSerializer):
             'expiry_time': {'read_only': True},
             'total_price': {'read_only': True}
         }
+

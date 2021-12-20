@@ -62,13 +62,18 @@ class TicketSetSerializer(serializers.ModelSerializer):
         """Validate that the number of even selling option tickets are in even quantity"""
 
         selling_option = attrs['selling_option']
+        event_building = attrs['event'].venue.building
         quantity = attrs['quantity']
 
         if selling_option == 'even':
             if quantity%2!=0:
-                msg = _('Please, enter an EVEN quantity')
+                msg = _('Please, enter an EVEN quantity for EVEN type of ticket')
                 raise serializers.ValidationError(msg)
         
+        total_seats = events.Seat.objects.filter(building=event_building).count()
+        
+        if quantity > total_seats:
+            raise serializers.ValidationError('Please enter valid quantity of tickets for number of seats or consider creating new venue')
         return attrs
 
 

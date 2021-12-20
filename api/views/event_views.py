@@ -1,4 +1,6 @@
-from rest_framework.generics import RetrieveAPIView
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -26,12 +28,23 @@ class SeatViewSet(ModelViewSet):
     serializer_class = event_serializers.SeatSerializer
     queryset = events.Seat.objects.all()
 
+    def get_queryset(self):
+        return events.Seat.objects.filter(building__id=self.kwargs.get('building_id'))
+    
+    def retrieve(self, request, *args, **kwargs):
+        serializer = self.get_serializer(events.Seat.objects.get(id=kwargs.get('seat_id')))
+        return Response({'seat':serializer.data}, status=status.HTTP_200_OK)
+
 
 class VenueViewSet(ModelViewSet):
     """API View for Venue"""
 
     serializer_class = event_serializers.VenueSerializer
     queryset = events.Venue.objects.all()
+
+    def get_queryset(self):
+        return events.Venue.objects.filter(city=self.kwargs.get('city'))
+    
 
 
 class TicketSetView(ModelViewSet):
@@ -53,4 +66,4 @@ class DetailTicketSetView(RetrieveAPIView):
         data = self.get_serializer(instance)
         return Response({
             'data':data.data
-        })
+        },status=status.HTTP_200_OK)

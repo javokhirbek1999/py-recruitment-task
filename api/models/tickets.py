@@ -88,6 +88,14 @@ class Ticket(models.Model):
             'status': self.seat.status,
             'building': self.seat.building_info
         }
+    
+    @property
+    def details(self):
+        return {
+            'id': self.id,
+            'type': self.ticket_type,
+            'seat': self.seat_details, 
+        }
 
     objects = TicketManger()
 

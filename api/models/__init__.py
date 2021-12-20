@@ -1,1 +1,1 @@
-from . import events, reservation, tickets, users
+from . import events, reservation, tickets, users, payment

@@ -1,27 +1,57 @@
 from datetime import timedelta, datetime
 
+
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import status
+from rest_framework.decorators import action
 
 from ..serializers.ticket_serializers import TicketSerializer, ReserveTicketSerializer
 from ..models.tickets import Ticket
 from ..models.reservation import Reservation
 
 
-class TicketViewSet(ModelViewSet):
-    """List API View for Tickets"""
+
+class AllTicketsViewSet(ModelViewSet):
+    """List all tickets for all available events"""
+
+    serializer_class = TicketSerializer
+    queryset = Ticket.objects.all()
+
+    @action(detail=True, url_path='available')
+    def available_tickets(self, request, pk=None):
+        available_tickets = Ticket.objects.available().filter(event__id=pk)
+        serializer = self.get_serializer(available_tickets, many=True)
+        return Response({'quantity':available_tickets.count(), 'tickets':serializer.data}, status=status.HTTP_200_OK)
     
-    permission_classes = ()
+
+    @action(detail=True, url_path='booked')
+    def booked(self, request, pk=None):
+        booked_tickets = Ticket.objects.booked().filter(event__id=pk)
+        serializer = self.get_serializer(booked_tickets, many=True)
+        return Response({'quantity':booked_tickets.count(), 'tickets': serializer.data}, status=status.HTTP_200_OK)
+
+    
+    @action(detail=True, url_path='selected')
+    def booked(self, request, pk=None):
+        selected_tickets = Ticket.objects.selected().filter(evet__id=pk)
+        serializer = self.get_serializer(selected_tickets, many=True)
+        return Response({'quantity': selected_tickets.count(), 'tickets': serializer.data}, status=status.HTTP_200_OK)
+
+
+class TicketViewSet(ModelViewSet):
+    """List Ticket API View for Specific Event"""
+    
+    # permission_classes = ()
     serializer_class = TicketSerializer
     queryset = Ticket.objects.all()
 
     def get_queryset(self):
         return super().get_queryset().filter(event__id=self.kwargs.get('event_id'), ticket_type=self.kwargs.get('ticket_type'), status=self.kwargs.get('status'))
 
-        
+
 class TicketDetailView(RetrieveAPIView):
     """Detail API View for Tickets that gets ticket by seat id"""
 
@@ -30,7 +60,11 @@ class TicketDetailView(RetrieveAPIView):
     queryset = Ticket.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_queryset().get(event__id=kwargs.get('event_id'),seat__id=kwargs.get('seat_id'))
+        instance = None
+        try:
+            instance = self.get_queryset().get(event__id=kwargs.get('event_id'),id=kwargs.get('ticket_id'))
+        except Ticket.DoesNotExist:
+            return Response({'error': 'The ticket you are looking for does not exist'}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -45,13 +79,21 @@ class ReserveTicketView(RetrieveUpdateAPIView):
 
 
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_queryset().get(event__id=kwargs.get('event_id'),seat__id=kwargs.get('seat_id'))
+        print(kwargs)
+        instance = None
+        try:
+            instance = self.get_queryset().get(event__id=kwargs.get('event_id'),id=kwargs.get('ticket_id'))
+        except Ticket.DoesNotExist:
+            return Response({'error': 'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def update(self, request, *args, **kwargs):
-        instance = self.get_queryset().get(event__id=kwargs.get('event_id'), seat__id=kwargs.get('seat_id'))
-
+        instance = None
+        try:
+            instance = self.get_queryset().get(event__id=kwargs.get('event_id'),id=kwargs.get('ticket_id'))
+        except Ticket.DoesNotExist:
+            return Response({'error':'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
         user = request.user
 
         if instance.status == 'selected':
