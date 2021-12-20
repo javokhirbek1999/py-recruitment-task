@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     # 3th party libs
     "rest_framework",
+    'drf_yasg',
 
     # Own modules
     'api',
