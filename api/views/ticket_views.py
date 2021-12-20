@@ -104,7 +104,10 @@ class ReserveTicketView(RetrieveUpdateAPIView):
             reservation = None
             
             try:
-                reservation = Reservation.objects.get(client=user)
+                reservation = Reservation.objects.get(client=user, status='not paid')
+
+                if reservation.status == 'paid':
+                    raise Reservation.DoesNotExist # If current client already made a different reservation, then create a new reservation
             except Reservation.DoesNotExist:
                 # If reservation does not exist, create new reservation and set reservation expiry time
                 reservation = Reservation.objects.create(client=user, event=instance.event, expiry_time=datetime.now()+timedelta(minutes=15))

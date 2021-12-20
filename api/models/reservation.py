@@ -22,8 +22,8 @@ class Reservation(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     expiry_time = models.DateTimeField(default=None)
-    quantity = models.IntegerField(default=1) # Read Only
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.IntegerField(default=0) # Read Only
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     status = models.CharField(choices=RESERVATION_STATUS, max_length=200, default=NOT_PAID)
 
 
