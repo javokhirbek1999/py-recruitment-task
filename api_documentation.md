@@ -115,7 +115,20 @@ Ticket creation will be handled and automatically created by Ticket Set endpoint
 * Retrieve ticket for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`GET /tickets/all/event_id={event_id}/ticket_id={ticket_id}/`
 * Reserve ticket for specific event: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PUT /tickets/all/event_id={event_id}/ticket_id={ticket_id}/reserve`
 
+# 4. Users
+## 4.1 Admin Users
+* List Admin Users:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /users/admins/`
+* Create Admin Users: &nbsp;&nbsp;&nbsp;&nbsp;`POST /users/admins/`
+* Admin User details:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /users/admins/{id}/`
+* Update Admin User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `PUT /users/admins/{id}/`
+* Delete Admin User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `DELETE /users/admins/{id}/`
 
+## 4.2 Client Users
+* List Client User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /users/users/`
+* Create Client User: &nbsp;&nbsp;&nbsp;`GET /users/users/`
+* Client User detail:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `GET /users/users/{id}/`
+* Update Client User:&nbsp;&nbsp;&nbsp;&nbsp; `PUT /users/users/{id}/`
+* Delete Client User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `DELETE /users/users/{id}/`
 ---
 ## Technologies
 - Docker
@@ -123,6 +136,8 @@ Ticket creation will be handled and automatically created by Ticket Set endpoint
 - Django 3.2.9
 - Django REST Framework 3.12.4
 - PostgreSQL
+- Redis
+- Celery
 ---
 
 ## Setup
